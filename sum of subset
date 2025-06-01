@@ -1,0 +1,26 @@
+S = input("Enter the elements of set S separated by space: ").split()
+S = [int(x) for x in S]
+print("Set S:", S)
+d = int(input("Enter the sum d: "))
+def sum_of_subset(S, d):
+    result = []
+    def backtrack(start, current_subset, current_sum):
+        if current_sum == d:
+            result.append(list(current_subset))
+            return
+        if current_sum > d:
+            return
+        for i in range(start, len(S)):
+            current_subset.append(S[i])
+            backtrack(i + 1, current_subset, current_sum + S[i])
+            current_subset.pop()
+
+    backtrack(0, [], 0)
+    return result
+subsets = sum_of_subset(S, d)
+if subsets:
+    print("Subsets whose sum is", d, ":")
+    for subset in subsets:
+        print(subset)
+else:
+    print("No subset found with sum", d)
