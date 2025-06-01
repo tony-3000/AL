@@ -1,0 +1,26 @@
+n = int(input("Enter the number of items: "))
+print("Enter the weight and profit for each item:")
+weight = []
+profit = []
+for i in range(n):
+    w = int(input("Weight of item {}: ".format(i + 1)))
+    p = int(input("Profit of item {}: ".format(i + 1)))
+    weight.append(w)
+    profit.append(p)
+capacity = int(input("Enter the capacity of the knapsack: "))
+def Greedy_knapsack(capacity, weight, profit, n):
+    ratio = [(profit[i] / weight[i], weight[i], profit[i]) for i in range(n)]
+    ratio.sort(reverse=True, key=lambda x: x[0])
+    total_profit = 0
+    current_weight = 0
+    for ratio_value, w, p in ratio:
+        if current_weight + w <= capacity:
+            total_profit += p
+            current_weight += w
+        else:
+            remaining_capacity = capacity - current_weight
+            total_profit += ratio_value * remaining_capacity
+            break
+    return total_profit
+max_profit = Greedy_knapsack(capacity, weight, profit, n)
+print("Maximum profit earned (Greedy Approach) =", max_profit)
