@@ -1,26 +1,27 @@
- n=int(input("Enter the number of vertices:"))
-inf=float('inf')
+n = int(input("Enter the number of vertices: "))
+inf = float('inf')
+
 print("Enter the adjacency matrix (enter 'inf' for infinity):")
-graph=[]
+graph = []
 for i in range(n):
-    row=input().split()
-    graph.append([inf if x=='inf' else int(x) for x in row])
+    row = input().split()
+    graph.append([inf if x == 'inf' else int(x) for x in row])
+
 def floyd_warshall(graph):
-    n=len(graph)
-    dist=[]
-    for row in graph:
-        dist.append(row[:])
-        for k in range(n):
-            for i in range(n):
-                for j in range(n):
-                    dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j])
+    n = len(graph)
+    dist = [row[:] for row in graph]  # Copy the original graph
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+
     return dist
-shortest_paths=floyd_warshall(graph)
-print("Shortest paths between all pairs of vertices :")
+
+shortest_paths = floyd_warshall(graph)
+
+print("Shortest paths between all pairs of vertices:")
 for row in shortest_paths:
     for dist in row:
-        if dist==inf:
-            print("inf",end=" ")
-    else:
-        print(dist,end=" ")
-print()
+        print("inf" if dist == inf else dist, end=" ")
+    print()
