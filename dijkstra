@@ -1,0 +1,31 @@
+n = int(input("Enter the number of vertices in the graph: "))
+print("Enter the adjacency matrix (each row separated by spaces):")
+graph = []
+for i in range(n):
+    row = input().split()
+    graph.append([int(x) for x in row])
+source = int(input("Enter the source vertex: "))
+def dijkstra(graph, source):
+    V = len(graph)
+    dist = [float('inf')] * V
+    dist[source] = 0
+    visited = [False] * V
+    for _ in range(V):
+        min_dist = float('inf')
+        min_index = -1
+        for v in range(V):
+            if not visited[v] and dist[v] < min_dist:
+                min_dist = dist[v]
+                min_index = v
+        if min_index == -1:
+            break 
+        visited[min_index] = True
+        for v in range(V):
+            if graph[min_index][v] > 0 and not visited[v]:
+                dist[v] = min(dist[v], dist[min_index] + graph[min_index][v])
+    return dist
+shortest_paths = dijkstra(graph, source)
+
+print("Shortest distances from node", source, "to each node:")
+for i, j in enumerate(shortest_paths):
+    print("Vertex", i, "distance =", j)
