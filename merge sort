@@ -1,0 +1,51 @@
+import random
+import time
+import matplotlib.pyplot as plt
+arr = input("Enter the list if elements seperated by spaces: ").split()
+arr = [int(x) for x in arr]
+print("Input array: ", arr)
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr)//2
+    left = merge_sort(arr[ :mid])
+    right = merge_sort(arr[mid: ])
+    return merge(left, right)
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i = i+1            
+        else:
+            result.append(right[j])
+            j = j+1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+sorted_arr = merge_sort(arr)
+print("Sorted array: ", sorted_arr)
+start_time = time.time()
+sorted_arr = merge_sort(arr)
+end_time = time.time()
+print("Time taken to sort: ", end_time-start_time, "seconds")
+
+
+
+n_values = [5000, 6000, 7000, 8000]
+time_values= []
+for n in n_values:
+    arr = [random.randint(1,9)for _ in range(n)]
+    start_time = time.time()
+    sorted_arr = merge_sort(arr)
+    end_time = time.time()
+    time_taken = end_time - start_time
+    print("Time taken to sort", n, "elemnts:", time_taken, "seconds")
+    time_values.append(time_taken)
+plt.plot(n_values, time_values,color="black")
+plt.xlabel('Number of elements (n)')
+plt.ylabel('Time Taken(seconds)')
+plt.title('Merge Sort Time Complexity Analysis')
+plt.grid(True)
+plt.show()
