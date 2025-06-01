@@ -1,0 +1,40 @@
+import time
+import random
+import matplotlib.pyplot as plt
+arr = input("Enter the list of element seperated by spaces:").split()
+arr = [int(x)for x in arr]
+print("input array:",arr)
+n = len(arr)
+def selection_sort(arr):
+    for i in range (n):
+        min_idx = i
+        for j in range (i+1,n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+                arr[i],arr[min_idx] = arr[min_idx],arr[i]
+    return arr
+sorted_arr = selection_sort(arr)
+print("Sorted  Array",sorted_arr)
+start_time = time.time()
+sorted_arr = selection_sort(arr)
+end_time = time. time()
+print("time taken to start", end_time,"seconds")
+
+
+
+n_values = [5000,6000,7000,8000]
+time_values = []
+for n in n_values:
+    arr = [random.randint(1,9)for _ in range(n)]
+    start_time = time.time()
+    sorted_arr =selection_sort(arr)
+    end_time = time.time()
+    time_taken = end_time-start_time
+    print("Time taken to sort",n,"element:",time_taken ,"seconds")
+    time_values.append(time_taken)
+plt.plot(n_values,time_values,color="green")
+plt.xlabel('Number of elements (n)')
+plt.ylabel('Time taken (seconds)')
+plt.title('Selection sort Time Complexity Analysis')
+plt.grid(True)
+plt.show ()
